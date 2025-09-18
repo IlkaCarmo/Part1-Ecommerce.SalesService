@@ -21,7 +21,7 @@ namespace Ecommerce.SalesService.Services
 
             var order = new Order
             {
-                Id = Guid.NewGuid(),
+                OrderId = Guid.NewGuid(),
                 CreatedAt = DateTime.UtcNow,
                 CustomerId = request.CustomerId,
                 Status = "Pending",
@@ -34,7 +34,8 @@ namespace Ecommerce.SalesService.Services
                 }).ToList()
             };
             await _orderRepository.CreateAsync(order);
-            await _rabbitMqPublisher.PublishOrderNotificationAsync(order);
+            //await _rabbitMqPublisher.PublishOrderNotificationAsync(order);
+
             return order;
         }
         public async Task<Order?> GetOrderByIdAsync(Guid id)

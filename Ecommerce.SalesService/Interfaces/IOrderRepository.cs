@@ -6,6 +6,5 @@ namespace Ecommerce.SalesService.Interfaces
     {
         Task CreateAsync(Order order);
         Task<Order?> GetByIdAsync(Guid id);
-        Task<IEnumerable<Order>> GetAllAsync();
     }
 }
