@@ -14,7 +14,7 @@ namespace Ecommerce.SalesService.Services
             _orderRepository = orderRepository;
             _rabbitMqPublisher = rabbitMqPublisher;
         }
-        public async Task<Order> CreateOrderAsync(OrderRequestDto request)
+        public async Task<OrderResponseDto> CreateOrderAsync(OrderRequestDto request)
         {
             if (request.Items == null || !request.Items.Any())
                 throw new ArgumentException("Order must contain at least one item.");
@@ -30,13 +30,29 @@ namespace Ecommerce.SalesService.Services
                     Id = Guid.NewGuid(),
                     ProductId = item.ProductId,
                     Quantity = item.Quantity,
-                    UnitPrice = 0m 
+                    UnitPrice = item.UnitPrice,
                 }).ToList()
             };
+
             await _orderRepository.CreateAsync(order);
             //await _rabbitMqPublisher.PublishOrderNotificationAsync(order);
 
-            return order;
+            // Mapear entidade -> DTO de resposta
+            var response = new OrderResponseDto
+            {
+                OrderId = order.OrderId,
+                CustomerId = order.CustomerId,
+                CreatedAt = order.CreatedAt,
+                Status = order.Status,
+                Items = order.Items.Select(i => new OrderItemResponseDto
+                {
+                    Id = i.Id,
+                    ProductId = i.ProductId,
+                    Quantity = i.Quantity,
+                    UnitPrice = i.UnitPrice
+                }).ToList()
+            };
+            return response;
         }
         public async Task<Order?> GetOrderByIdAsync(Guid id)
         {

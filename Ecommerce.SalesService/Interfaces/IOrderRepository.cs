@@ -1,4 +1,5 @@
-﻿using Ecommerce.SalesService.Models;
+﻿using Ecommerce.SalesService.DTOs;
+using Ecommerce.SalesService.Models;
 
 namespace Ecommerce.SalesService.Interfaces
 {

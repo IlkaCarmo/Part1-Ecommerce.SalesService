@@ -1,9 +1,10 @@
 ﻿namespace Ecommerce.SalesService.DTOs
 {
-    public class OrderItemDto
+    public class OrderItemResponseDto
     {
+        public Guid Id { get; set; }
         public Guid ProductId { get; set; }
         public int Quantity { get; set; }
-        public int UnitPrice { get; set; }
+        public decimal UnitPrice { get; set; }
     }
 }

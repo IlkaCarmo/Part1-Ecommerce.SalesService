@@ -22,12 +22,12 @@ namespace Ecommerce.SalesService.Controllers
         {
             try
             {
-                var order = await _orderService.CreateOrderAsync(orderRequest);
+                var orderResponse = await _orderService.CreateOrderAsync(orderRequest);
 
                 return CreatedAtAction(
                     nameof(GetOrderById),
-                    new { id = order.OrderId },
-                    order
+                    new { id = orderResponse.OrderId },
+                    orderResponse
                 );
             }
             catch (ArgumentException ex)
