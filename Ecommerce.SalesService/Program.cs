@@ -4,7 +4,7 @@ using Ecommerce.SalesService.Messaging;
 using Ecommerce.SalesService.Repositories;
 using Ecommerce.SalesService.Services;
 using Microsoft.EntityFrameworkCore;
-
+ 
 var builder = WebApplication.CreateBuilder(args);
 
 // 🔹 EF Core + MySQL
@@ -17,6 +17,7 @@ builder.Services.AddDbContext<SalesDbContext>(options =>
 
 //DI
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IRabbitMqPublisher, RabbitMqPublisher>();
 builder.Services.AddScoped<IRabbitMqPublisher, RabbitMqPublisher>();
 
 builder.Services.AddScoped<OrderService>();
